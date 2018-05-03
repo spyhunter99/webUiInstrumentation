@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+
+
+        Enter a phone number: in the form (555) 555-5555
+        <input name="input" type="text" size="40" id="number" ><br>
+        <input type="button" value="Split" id="inputButton"><br><br>
+        <input type="button" value="Split2" id="inputButtonWithClickListener" onclick="alerter();"><br><br>
+        <button value="this is an html button" id="htmlButton">this is an html button</button>
+        <br>
+
+        <button value="this is an html button with an anonymous event" id="htmlButtonAnon" onclick="alert('anonymous click');">this is an html button with an anonymous event</button>
+        <br>
+        <button value="this is an html button with a click listener" id="htmlButtonAlerter" onclick="alerter()">this is an html button with a click listener</button>
+        <br>
+        <button value="this is an html button with a click listener with scope" id="htmlButtonAlerterJ" onclick="javascript:alerter()">this is an html button with a click listener with scope</button>
+        <br>
+
+        <button value="this is an html button with return false" id="htmlButtonAlerterF" onclick="javascript:alerter2()">this is an html button with return false</button>
+        <br>
+
+        <button value="this is an html button with an exception" id="htmlButtonAlerterError" onclick="javascript:alerter3()">this is an html button with an error   </button>
+
+        <button value="sendxhr" id="sendxhr" onclick="javascript:sendxhr()">xhr</button>
+        
+        
+        <button value="navTo" id="navTo" onclick="javascript:navTo()">nav</button>
+        <br>
+        Area code: <input name="areaCode" type="text" size="5" id="areaCode"><br>
+
+        Number: <input name="number" type="text" size="8" id="anotherNumber">
+
+        <script type="text/javascript">
+            function alerter() {
+                alert("clicked");
+            }
+
+            function alerter2() {
+                return false;
+            }
+            function alerter3() {
+                throw 'test error';
+            }
+            function sendxhr() {
+                var theUrl = 'http://www.twinturbo.net';
+                var xmlHttp = new XMLHttpRequest();
+
+                xmlHttp.onreadystatechange = function () {
+
+                };
+
+
+
+                xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+                xmlHttp.send(null);
+
+            }
+            
+            function navTo() {
+                window.location.href='http://www.twinturbo.net';
+            }
+        </script>
+        <script type="text/javascript" src="inject.js"></script>
+
+
+    </body>
+</html>
