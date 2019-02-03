@@ -7,6 +7,12 @@
  //publish this content to the following url via HTTP GET + query string
 var serviceUrl = 'http://localhost:8080/services/eventing?content=';
 
+const ENABLE_AHREF=true;
+const ENABLE_BUTTONS=true;
+const ENABLE_RADIO=true;
+const ENABLE_KEYPRESS=true;
+
+
 (function (funcName, baseObj) {
     // The public function name defaults to window.docReady
     // but you can pass in your own object and own function name and those will be used
@@ -83,9 +89,38 @@ var serviceUrl = 'http://localhost:8080/services/eventing?content=';
 })("docReady", window);
 
 
+document.querySelector('body').addEventListener('click', function(event) {
+  if (ENABLE_BUTTONS &&  event.target.tagName.toLowerCase() === 'button') {
+    // do your action on your 'li' or whatever it is you're listening for
+		handleEvent(event);
+  } else if (ENABLE_BUTTONS && event.target.tagName.toLowerCase() === 'input') {
+	    var type = event.target.getAttribute('type') === 'button' || 'submit'; // Submit is the default
+        if (type) {
+            handleEvent(event);
+        } 
+  } else if (ENABLE_AHREF && event.target.tagName.toLowerCase() === 'a') {
+	    handleEvent(event);
+  } else if (ENABLE_RADIO && event.target.tagName.toLowerCase() === 'input') {
+	    var type = event.target.getAttribute('type') === 'radio'; 
+        if (type) {
+            handleEvent(event);
+        }
+  } 
+  
+});
+
+document.querySelector('body').addEventListener('keyup', function(event) {
+  if (ENABLE_KEYPRESS &&  event.target.tagName.toLowerCase() === 'input') {
+    // do your action on your 'li' or whatever it is you're listening for
+		handleEvent(event);
+  } 
+  
+});
+
+
 //does this on doc start
 docReady(function () {
-    // code here
+   /* // code here
     //find all buttons
     var buttons = document.getElementsByTagName('button');
     for (var i = 0; i < buttons.length; i++) {
@@ -106,8 +141,10 @@ docReady(function () {
         }
     }
 	//TODO links 
-
+*/
 });
+
+
 
 function isEmpty(str) {
     return (!str || 0 === str.length);
@@ -120,20 +157,47 @@ function callbackHttpEvent(error, event, statusCode) {
 //on click event handler
 function handleEvent(element) {
     var event = {};
+	event.elementTag = '';
+	event.outerText='';
+	 event.elementId='';
     event.location = window.location.href;
+
     if (!isEmpty(element.currentTarget.id))
         event.elementId = element.currentTarget.id;
+	if (!isEmpty(element.target.id))
+        event.elementId = element.target.id;
+	
 
     if (!isEmpty(element.currentTarget.name))
         event.elementName = element.currentTarget.name;
+    if (!isEmpty(element.target.name))
+        event.elementName = element.target.name;
+	
+	
     if (!isEmpty(element.currentTarget.localName))
         event.elementTag = element.currentTarget.localName;
+	if (!isEmpty(element.target.tagName))
+		event.elementTag =  event.elementTag +  ' ' + element.target.tagName
+	
     if (!isEmpty(element.currentTarget.outerText))
         event.outerText = element.currentTarget.outerText;
+	 if (!isEmpty(element.target.innerHTML))
+        event.outerText = element.target.innerHTML;
+	
+	
+	if (!isEmpty(element.target.value))
+        event.outerText = event.outerText + ' '  +element.target.value;
+	
+	
     if (!isEmpty(element.currentTarget.type))
         event.elementType = element.currentTarget.type;
+	
     if (!isEmpty(element.currentTarget.value))
         event.elementValue = element.currentTarget.value;
+	if (!isEmpty(element.target.value))
+        event.elementValue = element.target.value;
+	
+	
     event.timeStamp = (new Date).getTime();
 
 

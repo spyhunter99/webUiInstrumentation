@@ -4,18 +4,33 @@
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
-    <body>
+    <body style="color:white;background-color:black">
         <h1>Hello World!</h1>
 
+		This page is a test page to test various conditions in which our injection script will pick up on user events and asynchronously send them somewhere.
+		You really need to you have the javascript console open in order to monitor it working (or not!)
+		<br><br>
+		<ol>
+		<li><a href="#buttontest">Buttons</a>
+		<li><a href="#linktest">Links</a>
+		<li><a href="#xhrtest">XHR</a>
+		<li><a href="#inputtest">Inputs</a>
+		<!-- mouse tracking? -->
+		</ol>
+		
+		
+		<hr>
+		<a name="buttontest"></a>
+		<h2>Buttons</h2>
 
-        Enter a phone number: in the form (555) 555-5555
-        <input name="input" type="text" size="40" id="number" ><br>
+        
         <input type="button" value="Split" id="inputButton"><br><br>
         <input type="button" value="Split2" id="inputButtonWithClickListener" onclick="alerter();"><br><br>
         <button value="this is an html button" id="htmlButton">this is an html button</button>
         <br>
 
-        <button value="this is an html button with an anonymous event" id="htmlButtonAnon" onclick="alert('anonymous click');">this is an html button with an anonymous event</button>
+		Note that our capture mechanism fires off after the javascript alert is dismissed. But who still uses them anyhow?
+        <button value="this is an html button with an inline javascript event" id="htmlButtonAnon" onclick="alert('anonymous click');">this is an html button with an anonymous event</button>
         <br>
         <button value="this is an html button with a click listener" id="htmlButtonAlerter" onclick="alerter()">this is an html button with a click listener</button>
         <br>
@@ -26,17 +41,70 @@
         <br>
 
         <button value="this is an html button with an exception" id="htmlButtonAlerterError" onclick="javascript:alerter3()">this is an html button with an error   </button>
-
-        <button value="sendxhr" id="sendxhr" onclick="javascript:sendxhr()">xhr</button>
-        
-        
-        <button value="navTo" id="navTo" onclick="javascript:navTo()">nav</button>
+		<br>
+		<button value="dyn" id="dyn" onclick="javascript:dynamicAdd()">dynamically add some new buttons</button>
         <br>
+		Dynamicaly added buttons goes here:<br>
+		<div id="dynid"></div>
+		
+		
+		
+		
+		<a name="linktest"></a>
+		<h3>Links</h3>
+		<a href="#buttontest">Here's a link on this page</a><br>
+		<a href="https://www.cnn.com">Here's an external link</a><br>
+		
+		
+		
+		
+		<hr>
+
+		
+		
+		<a name="xhrtest"></a>
+		<h2>XHR</h2>
+        <button value="sendxhr" id="sendxhr" onclick="javascript:sendxhr()">send an xhr request</button>
+		<br>
+        
+        <button value="navTo" id="navTo" onclick="javascript:navTo()">navigates to twinturbo.net</button>
+		<br>
+
+		
+		
+
+
+		
+		
+		<hr>
+		<a name="#inputtest"></a>
+		<h2>Inputs</h2>
+		
+		Enter a phone number: in the form (555) 555-5555
+        <input name="input" type="text" size="40" id="number" ><br>
+		
         Area code: <input name="areaCode" type="text" size="5" id="areaCode"><br>
 
-        Number: <input name="number" type="text" size="8" id="anotherNumber">
-
+        Number: <input name="number" type="text" size="8" id="anotherNumber"><br>
+		
+		Gender:<br>
+		 <input type="radio" name="gender" value="male" checked> Male<br>
+		  <input type="radio" name="gender" value="female"> Female<br>
+		  <input type="radio" name="gender" value="other"> Other<br><br>
+        
+		Password: <input name="password" type="password" size="20" id="pwd"><br>
+		
         <script type="text/javascript">
+			
+			var dynamicIndex=0;
+			function dynamicAdd() {
+				 var btn = document.createElement("BUTTON");
+				  var t = document.createTextNode("CLICK ME " + dynamicIndex);
+				  dynamicIndex++;
+				  btn.appendChild(t);
+				  document.getElementById("dynid").appendChild(btn);
+			
+			}
             function alerter() {
                 alert("clicked");
             }
